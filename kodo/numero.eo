@@ -1,0 +1,33 @@
+@numero_8 numero {
+	[ numero & FF ]
+}
+
+@numero_16 numero {
+	[ numero >> 10 = 00 ?
+		[ numero >> 08 = 00 ? numero 00 ]
+		[ numero >> 08 != 00 ? numero ]
+	]
+	[ numero >> 10 != 00 ? [ numero & FF FF ] ]
+}
+
+@numero_32 numero {
+	[ numero = 00 ? 00 00 00 00 ]
+	[ numero != 00 ?
+		[ numero >> 20 = 00 ?
+			[ numero >> 18 = 00 ? numero_32 [ numero 00 ] ]
+			[ numero >> 18 != 00 ? numero ]
+		]
+		[ numero >> 20 != 00 ? [ numero & FF FF FF FF ] ]
+	]
+}
+
+@numero_64 numero {
+	[ numero = 00 ? 00 00 00 00 00 00 00 00 ]
+	[ numero != 00 ?
+		[ numero >> 40 = 00 ?
+			[ numero >> 38 = 00 ? numero_64 [ numero 00 ] ]
+			[ numero >> 38 != 00 ? numero ]
+		]
+		[ numero >> 40 != 00 ? [ numero & FF FF FF FF FF FF FF FF ] ]
+	]
+}
